@@ -4,9 +4,38 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class HangMan {
-
-	
-	static int startGame(String str) {
+	 
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        int random;
+        BufferedReader in = null; // 파일을 읽어오는 버퍼
+        char replay = 'y'; // 게임을 실행할 것인가
+        int result; // 게임 결과
+        Scanner s = new Scanner(System.in);
+        try {
+            while(replay=='y') {
+                in = new BufferedReader(
+                        new FileReader("D:\\eclipse-workspace\\Chapter8\\src\\words.txt"));
+                random = (int)(Math.random()*25143);
+                for(int i=0;i<random-1;i++) {
+                    in.readLine();
+                }
+                String str = in.readLine(); // random 번째 문자열
+                System.out.println("지금부터 행맨 게임을 시작합니다.");
+                result = startGame(str);
+                System.out.println(str); // 정답 문자열 알려주기
+                if(result==0) {
+                    System.out.println("5번 실패 하였습니다.");
+                }
+                System.out.print("Next(y/n)?");
+                replay=s.next().charAt(0);
+            }
+             
+        }catch(IOException e) {
+            System.out.println("파일 입출력 오류");
+        }
+    }
+    static int startGame(String str) {
         int fail=0; // 실패 횟수
         int success=0; // 성공 횟수
         int level=2; //몇 글자를 숨길 것인가
@@ -50,43 +79,5 @@ public class HangMan {
             return 1; // 성공을 반환
         }
     }
-	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		Scanner s = new Scanner(System.in);
-		char restart = 'y';
-		int result;
-		
-		try {
-			BufferedReader fin = new BufferedReader(new FileReader("D:\\eclipse-workspace\\Chapter8\\word.txt"));
-			
-			while(restart == 'y') {
-				int random = (int)(Math.random()*25143);
-				
-				for(int i=0;i<random-1;i++) {
-                    fin.readLine();
-				}
-				
-				String str = fin.readLine();
-				
-                System.out.println("지금부터 행맨 게임을 시작합니다.");
-                result = startGame(str);
-                System.out.println(str); // 정답 문자열 알려주기
-                if(result==0) {
-                	System.out.println("5번 실패 하였습니다.");
-                    
-                }
-                System.out.print("Next(y/n)?");
-                restart=s.next().charAt(0);
-            }
-		} catch(IOException e) {
-			System.out.println("입출력 오류");
-		}
-		
-	}
-	
-	
-
+ 
 }
